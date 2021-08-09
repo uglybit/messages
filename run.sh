@@ -5,6 +5,6 @@ gnome-terminal -- ./server
 cd ../Client
 make
 
-gnome-terminal -- ./client 6
-gnome-terminal -- ./client 4
+gnome-terminal -- ./client 9
+gnome-terminal -- ./client 5
 
