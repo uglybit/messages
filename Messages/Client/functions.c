@@ -1,24 +1,19 @@
 #include "functions.h"
 
 #define PORT 7981
-#define BUFFER_SIZE 1024
-#define NUMB_OF_MESSAGESS 8
+#define MESS_SIZE 5
 
 int message_counter;
-
-char messages[NUMB_OF_MESSAGESS][20] = {
-    "Hi", "Ciao", "Hallo", "Auf wiedersehen", "Dzien dobry", "Czesc", "Servus", "Buongiorno"
-    };
 
 void* thread_receive(void* client_sock){
 
     int client_socket = *(int*)client_sock;
-    char recv_buffer[BUFFER_SIZE];
+    char recv_buffer[MESS_SIZE];
     int bytes;
     while(1) {
-        bzero(recv_buffer, BUFFER_SIZE);
-        bytes = recv(client_socket, recv_buffer, BUFFER_SIZE, 0);
-        if (strcmp(recv_buffer, "end") == 0) { // second client sent all messages and server sends info 
+        bzero(recv_buffer, MESS_SIZE);
+        bytes = recv(client_socket, recv_buffer, MESS_SIZE, 0);
+        if (strcmp(recv_buffer, "end") == 0) { // second client sent all messages and server sends ending info 
             printf("\nSuccess - ending connection\n");
             exit(EXIT_SUCCESS);
         }
@@ -26,6 +21,19 @@ void* thread_receive(void* client_sock){
             printf("%s (%d bytes)\n\n", recv_buffer, bytes);
         }
     }
+}
+
+char* new_message() {
+    srand(time(NULL));
+    char* message = malloc(MESS_SIZE);
+
+    int nr;
+    int i = 0;
+    while(i < MESS_SIZE) {
+         nr = rand()%20 + 50;
+         message[i++] = (char)nr;
+    }
+    return message;
 }
 
 // client sent all messages and this func is informing server about this
@@ -37,19 +45,19 @@ void say_goodbye(int client_sock) {
 void* thread_send(void* client_sock) {
     int client_socket = *(int*)client_sock;
     int current_message = 0;
-    srand(time(NULL));
-    char send_buffer[BUFFER_SIZE];
+    char send_buffer[MESS_SIZE];
 
     while(current_message < message_counter) {
         int bytes = 0;
-        bzero(send_buffer, BUFFER_SIZE);
-        int index = rand() % NUMB_OF_MESSAGESS;
+        bzero(send_buffer, MESS_SIZE);
+        char* message = new_message();
+        strcpy(send_buffer, message);
+        free(message);
 
-        strcpy(send_buffer, messages[index]);
         bytes = send(client_socket, send_buffer, strlen(send_buffer), 0);
             if (bytes > 0) {
             printf("\t %s  (%ld bytes) ---> \n", send_buffer, strlen(send_buffer));
-            bzero(send_buffer, BUFFER_SIZE);
+            bzero(send_buffer, MESS_SIZE);
             current_message++;
         }
     sleep(2); // for showing conversation

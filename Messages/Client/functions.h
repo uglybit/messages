@@ -10,9 +10,6 @@
 #include <unistd.h> 
 #include <pthread.h>
 
-#define PORT 7981
-#define BUFFER_SIZE 1024
-#define NUMB_OF_MESSAGESS 8
 
 void* thread_receive(void* client_sock);
 
