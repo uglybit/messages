@@ -1,3 +1,6 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <stdio.h>
 #include <stdlib.h> //rand
 #include <string.h> // strcpy, strlen, memset
@@ -19,3 +22,5 @@ void say_goodbye(int client_sock);
 void* thread_send(void* client_sock);
 
 void set_server(struct sockaddr_in* serverAddress) ;
+
+#endif

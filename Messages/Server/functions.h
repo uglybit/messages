@@ -1,3 +1,6 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <stdio.h>
 #include <stdlib.h> //EXIT_FAILURE
 #include <string.h>
@@ -31,3 +34,5 @@ void* conversation();
 void* connect_client(void* servSoc);
 
 int set_server();
+
+#endif
