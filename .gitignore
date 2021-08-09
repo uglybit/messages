@@ -4,3 +4,6 @@ client
 Zadanie.pdf
 Messages/Client/client.o
 Messages/Server/server.o
+Messages/Client/functions.o
+Messages/Server/functions.o
+queue.txt
