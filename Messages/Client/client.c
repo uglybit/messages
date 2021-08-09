@@ -4,7 +4,7 @@
 #include <strings.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
-#include <unistd.h> //sleep
+#include <unistd.h> // sleep
 #include <pthread.h>
 
 #define PORT 7981

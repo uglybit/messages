@@ -2,3 +2,5 @@ Messages/Client/client
 Messages/Server/server
 client
 Zadanie.pdf
+Messages/Client/client.o
+Messages/Server/server.o
