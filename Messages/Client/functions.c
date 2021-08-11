@@ -2,23 +2,24 @@
 
 #define PORT 7981
 #define MESS_SIZE 5
+#define BUFF_SIZE 1024
 
 int message_counter;
 
 void* thread_receive(void* client_sock){
 
     int client_socket = *(int*)client_sock;
-    char recv_buffer[MESS_SIZE];
+    char recv_buffer[BUFF_SIZE];
     int bytes;
     while(1) {
-        bzero(recv_buffer, MESS_SIZE);
-        bytes = recv(client_socket, recv_buffer, MESS_SIZE, 0);
+        bzero(recv_buffer, BUFF_SIZE);
+        bytes = recv(client_socket, recv_buffer, BUFF_SIZE, 0);
         if (strcmp(recv_buffer, "end") == 0) { // second client sent all messages and server sends ending info 
             printf("\nSuccess - ending connection\n");
             exit(EXIT_SUCCESS);
         }
         if (bytes > 0) {
-            printf("%s (%d bytes)\n\n", recv_buffer, bytes);
+            printf("%s \n\n", recv_buffer);
         }
     }
 }
@@ -30,7 +31,7 @@ char* new_message() {
     int nr;
     int i = 0;
     while(i < MESS_SIZE) {
-         nr = rand()%20 + 50;
+         nr = rand()%20 + 50 + message_counter;
          message[i++] = (char)nr;
     }
     return message;
@@ -56,7 +57,7 @@ void* thread_send(void* client_sock) {
 
         bytes = send(client_socket, send_buffer, strlen(send_buffer), 0);
             if (bytes > 0) {
-            printf("\t %s  (%ld bytes) ---> \n", send_buffer, strlen(send_buffer));
+            printf("\t %s ---> \n", send_buffer);
             bzero(send_buffer, MESS_SIZE);
             current_message++;
         }

@@ -27,13 +27,13 @@ int main(int argc, char* argv[]) {
     }
 
     if (pthread_create(&sending, NULL, &thread_send, &client_socket) != 0) {
-    printf("Problem with thread_1 creation\n");
-    exit(EXIT_FAILURE);
+        printf("Problem with thread_1 creation\n");
+        exit(EXIT_FAILURE);
     }
 
     if (pthread_join(receiving, NULL) != 0) {
-    printf("Problem with thread_2 join\n");
-    exit(EXIT_FAILURE);
+        printf("Problem with thread_2 join\n");
+        exit(EXIT_FAILURE);
     }
     
     if (pthread_join(sending, NULL) != 0) {

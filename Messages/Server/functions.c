@@ -165,7 +165,7 @@ int set_server(){
     setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(PORT);
-    serverAddress.sin_addr.s_addr = INADDR_ANY;
+    serverAddress.sin_addr.s_addr = inet_addr("127.0.0.1");
     
     int binding = bind(server_socket, (struct sockaddr*)&serverAddress, 
             sizeof(serverAddress));
